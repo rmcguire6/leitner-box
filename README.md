@@ -17,7 +17,7 @@ The new cards for the day are presented first and then the old cards. Any cards 
 
 ### Project Status
 
-- [] Write epics and user stories
+- [x] Write epics and user stories
 - [x] Sketch page layouts
 - [] Wireframe with Figma
-- [] Decide tech stack
+- [x] Decide tech stack
