@@ -21,3 +21,8 @@ The new cards for the day are presented first and then the old cards. Any cards 
 - [x] Sketch page layouts
 - [] Wireframe with Figma
 - [x] Decide tech stack
+- [x] Create Flask backend
+- [] Create database schema
+- [] Create database
+- [] Create and load database
+- [] Create backend routes
