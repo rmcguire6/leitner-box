@@ -3,9 +3,18 @@
 ## Overview
 
 The Leitner box is a tool for using spaced repetition to memorize and remember anything forever.
+
 This app takes a very simple approach.
-The user decides the number of new cards per day that they are going to add. The app then allows the user to create that many new cards and then loads the practice page.
+
+A first time user inputs a username and the number of new cards they want to create every time they use the app.
+
+The app then takes the new user to the create cards page to create that many new cards.
+
+Every user, after the new cards are created and verified, is taken to the practice page.
+
 The new cards for the day are presented first and then the old cards. Any cards that are missed are shown again until all the cards are correctly remembered.
+
+At this point the user sees an ending message with congratulations, statistics on how many cards were gotten right, and a reminder to do it again tomorrow.
 
 ## Features
 
@@ -22,7 +31,8 @@ The new cards for the day are presented first and then the old cards. Any cards 
 - [] Wireframe with Figma
 - [x] Decide tech stack
 - [x] Create Flask backend
-- [] Create database schema
-- [] Create database
-- [] Create and load database
+- [x] Create database user schema
+- [] Create database card schema
+- [x] Create database
+- [] Create test data and load into database
 - [] Create backend routes
