@@ -9,9 +9,9 @@ class User(db.Model):
 
 class Card(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    subject = db.Column(db.String(64), required=True)
-    question = db.Column(db.String(64), required=True)
-    answer = db.Column(db.String(64), required=True)
+    subject = db.Column(db.String(64), nullable=False)
+    question = db.Column(db.String(64), nullable=False)
+    answer = db.Column(db.String(64), nullable=False)
     active = db.Column(db.Boolean, default=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     
