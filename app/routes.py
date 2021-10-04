@@ -1,23 +1,22 @@
 from app import app
+from app import db
 from app import models
-from flask import jsonify
+from flask import jsonify, request 
 
 @app.route('/')
 @app.route('/index')
 def index():
     return "Hello World from Flask"
 
-@app.route('/users')
-def get_users():
-    users_list = models.User.query.all()
-    result = models.users_schema.dump(users_list[0])
-    return jsonify(result)    
-
-@app.route('/user/<int:user_id>', methods=["GET"])
-def get_user(user_id: int):
-    user = models.User.query.filter_by(user_id=user_id).first()
-    if user:
-        result = models.user_schema.dump(user)
-        return jsonify(result)
+@app.route('/auth/register', methods=['POST'])
+def create_user():
+    if request.is_json:
+        username = request.json['name']
+        test = models.User.query.filter_by(username=username).first()
+    if test:
+        return jsonify(message="That user name is taken. Please try another one."), 409
     else:
-        return jsonify(message="That user does not exist"), 404
+        user = models.User(username = username)
+        db.session.add(user)
+        db.session.commit()
+        return jsonify(message="User created successfully."), 201
