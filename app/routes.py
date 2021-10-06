@@ -21,6 +21,16 @@ def create_user():
         db.session.commit()
         return jsonify(message="User created successfully."), 201
 
+@app.route('/auth/login', methods=['POST'])
+def login_user():
+    if request.is_json:
+        username = request.json['name']
+        test = models.User.query.filter_by(username=username).first()
+    if test:
+        return jsonify(test.user_id)
+    else:
+        return jsonify(message="No user with that name."), 404
+
 @app.route('/create_card', methods=['POST'])
 def create_card():
     user_id = request.args.get('user_id')
@@ -38,3 +48,15 @@ def create_card():
         else: return jsonify(message="Card can not be created."), 409
     else:
         return jsonify(message="Card can not be created."), 409
+
+@app.route('/testing/cards', methods=['GET'])
+def get_cards():
+    cards = models.Card.query.all()
+    result = models.cards_schema.dump(cards)
+    return jsonify(result)
+
+@app.route('/testing/users', methods=['GET'])
+def get_users():
+    users = models.User.query.all()
+    result = models.users_schema.dump(users)
+    return jsonify(result)
