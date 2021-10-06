@@ -10,7 +10,7 @@ class User(db.Model):
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('user_id', 'username', 'cards')
+        fields = ('user_id', 'username')
 
 class Card(db.Model):
     __tablename__ = "card"
