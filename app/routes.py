@@ -3,7 +3,6 @@ from app import db
 from app import models
 from flask import jsonify, request 
 
-@app.route('/')
 @app.route('/index')
 def index():
     return "Hello World from Flask"
