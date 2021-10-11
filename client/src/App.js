@@ -1,7 +1,14 @@
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+
+import HomePage from "./pages/homepage/homepage";
+
 function App() {
   return (
     <div>
-      <h1>Leitner Box</h1>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+      </Switch>
     </div>
   );
 }
