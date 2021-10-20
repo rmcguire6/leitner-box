@@ -1,7 +1,8 @@
+from flask import jsonify, request
 from app import app
 from app import db
 from app import models
-from flask import jsonify, request 
+
 
 @app.route('/index')
 def index():
@@ -11,14 +12,17 @@ def index():
 def create_user():
     if request.is_json:
         username = request.json['name']
+        cards_per_day = int(request.json['cards_per_day'])
         test = models.User.query.filter_by(username=username).first()
-    if test:
-        return jsonify(message="That user name is taken. Please try another one."), 409
+        if test:
+            return jsonify(message="That user name is taken. Please try another one."), 409
+        else:
+            user = models.User(username = username, cards_per_day=cards_per_day)
+            db.session.add(user)
+            db.session.commit()
+            return jsonify(message="User created successfully."), 201
     else:
-        user = models.User(username = username)
-        db.session.add(user)
-        db.session.commit()
-        return jsonify(message="User created successfully."), 201
+        return jsonify(message="Bad request"), 400
 
 @app.route('/auth/login', methods=['POST'])
 def login_user():
