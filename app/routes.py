@@ -1,8 +1,12 @@
 from flask import jsonify, request
+
 from app import app
 from app import db
-from app import models
+from app.models import User, Card, cards_schema, users_schema
 
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 @app.route('/index')
 def index():
@@ -13,11 +17,11 @@ def create_user():
     if request.is_json:
         username = request.json['name']
         cards_per_day = int(request.json['cards_per_day'])
-        test = models.User.query.filter_by(username=username).first()
+        test = User.query.filter_by(username=username).first()
         if test:
             return jsonify(message="That user name is taken. Please try another one."), 409
         else:
-            user = models.User(username = username, cards_per_day=cards_per_day)
+            user = User(username = username, cards_per_day=cards_per_day)
             db.session.add(user)
             db.session.commit()
             return jsonify(message="User created successfully."), 201
@@ -28,7 +32,7 @@ def create_user():
 def login_user():
     if request.is_json:
         username = request.json['name']
-        test = models.User.query.filter_by(username=username).first()
+        test = User.query.filter_by(username=username).first()
     if test:
         return jsonify(test.user_id)
     else:
@@ -39,12 +43,12 @@ def create_card():
     user_id = request.args.get('user_id')
     if user_id:
         user_id = int(user_id)
-        test = models.User.query.filter_by(user_id=user_id)
+        test = User.query.filter_by(user_id=user_id)
         if test:
             subject = request.json['subject']
             question = request.json['question']
             answer = request.json['answer']
-            card = models.Card(subject=subject, question=question, answer=answer, user_id=user_id)
+            card = Card(subject=subject, question=question, answer=answer, user_id=user_id)
             db.session.add(card)
             db.session.commit()
             return jsonify(message="Card created successfully."), 201
@@ -54,12 +58,12 @@ def create_card():
 
 @app.route('/testing/cards', methods=['GET'])
 def get_cards():
-    cards = models.Card.query.all()
-    result = models.cards_schema.dump(cards)
+    cards = Card.query.all()
+    result = cards_schema.dump(cards)
     return jsonify(result)
 
 @app.route('/testing/users', methods=['GET'])
 def get_users():
-    users = models.User.query.all()
-    result = models.users_schema.dump(users)
+    users = User.query.all()
+    result = users_schema.dump(users)
     return jsonify(result)
