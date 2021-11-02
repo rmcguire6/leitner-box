@@ -1,6 +1,8 @@
+import LogIn from "../../components/log-in/log-in";
+
 const LogInAndSignUpPage = () => (
   <div>
-    <h1>Log In Here</h1>
+    <LogIn />
   </div>
 );
 export default LogInAndSignUpPage;
