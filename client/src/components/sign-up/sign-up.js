@@ -1,11 +1,14 @@
 import { useState } from 'react';
+import { registerUser } from '../../api/apicalls';
+
 const SignUp = () => {
   const [name, setName] = useState('');
   const [cardsPerDay, setCardsPerDay] = useState(1);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // call to /auth_register
-    console.log(`New user: ${name}`);
+    registerUser({ name, cardsPerDay });
+    console.log(`New user: ${name}, ${cardsPerDay}`);
   };
 
   return (
