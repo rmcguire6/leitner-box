@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-
+import React, { useState } from 'react';
+import { loginUser } from '../../api/apicalls';
 const LogIn = () => {
-  const [user, setUser] = useState({ name: "" });
+  const [user, setUser] = useState({ name: '', cardsPerDay: 0 });
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // call to /auth/login
+    loginUser({ name: user.name });
     console.log(`Current logged in user name: ${user.name}`);
   };
   const handleChange = (event) => {

@@ -13,5 +13,16 @@ async function registerUser({ name, cardsPerDay }) {
       console.log(error);
     });
 }
-
-export { registerUser };
+async function loginUser({ name, cardsPerDay }) {
+  axios
+    .post('/auth/login', {
+      name: name,
+    })
+    .then(function (response) {
+      console.log(`loginUser ${response}`);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+export { registerUser, loginUser };
