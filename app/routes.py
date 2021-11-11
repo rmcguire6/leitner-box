@@ -1,5 +1,4 @@
 from flask import jsonify, request
-
 from app import app
 from app import db
 from app.models import User, Card, cards_schema, users_schema
@@ -36,13 +35,15 @@ def login_user():
     if test:
         return jsonify(test.user_id)
     else:
-        return jsonify(message="No user with that name."), 404
+        return jsonify(message="No user with that name."), 401
+
 
 @app.route('/create_card', methods=['POST'])
 def create_card():
-    user_id = request.args.get('user_id')
-    if user_id:
-        user_id = int(user_id)
+    if request.is_json:
+        _id = request.json['user_id']
+    if _id:
+        user_id = int(_id)
         test = User.query.filter_by(user_id=user_id)
         if test:
             subject = request.json['subject']
@@ -52,9 +53,9 @@ def create_card():
             db.session.add(card)
             db.session.commit()
             return jsonify(message="Card created successfully."), 201
-        else: return jsonify(message="Card can not be created."), 409
+        else: return jsonify(message="Card can not be created."), 401
     else:
-        return jsonify(message="Card can not be created."), 409
+        return jsonify(message="Card can not be created."), 404
 
 @app.route('/testing/cards', methods=['GET'])
 def get_cards():
